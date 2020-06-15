@@ -9,6 +9,9 @@ import operator
 
 TAKEOUT_DIRECTORY_PATH = '/Users/guy/Downloads/Takeout'
 CSV_DIRECTORY = 'Fit/Daily Aggregations'
+AVERAGE_WEIGHT_FIELD = 'Average weight (kg)'
+
+
 csv_dir = os.path.join(TAKEOUT_DIRECTORY_PATH, CSV_DIRECTORY)
 files = os.listdir(csv_dir)
 
@@ -24,7 +27,7 @@ for csv_file in daily_aggregations:
     date_part = csv_file.split(".")[0]
     date = dateparser.parse(date_part)
     csv = pandas.read_csv(os.path.join(csv_dir, csv_file))
-    weight = csv[csv['Average weight (kg)'].notna()]['Average weight (kg)'].mean()
+    weight = csv[csv[AVERAGE_WEIGHT_FIELD].notna()][AVERAGE_WEIGHT_FIELD].mean()
     if pandas.notna(weight):
         data.append({"date": date, "weight": weight})
         # print(csv_file, weight)
